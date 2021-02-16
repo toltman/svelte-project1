@@ -2,6 +2,8 @@
   export let name;
   import data from "./data.js";
   import { timeParse } from "d3-time-format";
+  import { extent } from "d3-array";
+  import Chart from "./Chart.svelte";
 
   data.forEach((d) => {
     d.Date = timeParse("%Y-%m-%d")(d.Date);
@@ -25,28 +27,16 @@
   ];
   $: minX = data[0].Date;
   $: maxX = data[data.length - 1].Date;
+
+  $: extentY = extent(data, (d) => d.Close);
+  $: minY = extentY[0];
+  $: maxY = extentY[1];
 </script>
 
 <main>
   <h1>Hello {name}!</h1>
-  <p>
-    The first date is: {monthNames[minX.getMonth()] +
-      " " +
-      minX.getDate() +
-      ", " +
-      minX.getFullYear()}
-  </p>
-  <p>
-    The last date is: {monthNames[maxX.getMonth()] +
-      " " +
-      maxX.getDate() +
-      ", " +
-      maxX.getFullYear()}
-  </p>
-  <p>
-    Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-    how to build Svelte apps.
-  </p>
+
+  <Chart {data} />
 </main>
 
 <style>
