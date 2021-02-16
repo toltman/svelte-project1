@@ -1,6 +1,6 @@
 <script>
   import { scaleLinear as d3scaleLinear } from "d3-scale";
-  import { extent as d3extent } from "d3-array";
+  import { extent as d3extent, bisector as d3bisector } from "d3-array";
   import { line as d3line, area as d3area } from "d3-shape";
   import { timeFormat as d3timeFormat } from "d3-time-format";
   export let data;
@@ -13,10 +13,18 @@
   var formatTime = d3timeFormat("%b %d");
 
   let m = { x: 0, y: 0 };
+  let date;
+
+  var bisect = d3bisector((d) => d.Date).right;
 
   function handleMousemove(event) {
     m.x = event.offsetX;
     m.y = event.offsetY;
+    date = formatTime(new Date(xScale.invert(m.x)));
+    let i = bisect(data, xScale.invert(m.x));
+    if (i < data.length) {
+      point = data[i];
+    }
   }
 
   $: minX = data[0].Date;
@@ -39,13 +47,29 @@
     .x((d) => xScale(d.Date))
     .y1((d) => yScale(d.Close))
     .y0(yScale(0))(data);
+  $: point = data[0];
 </script>
 
 <p>The mouse position is {m.x}, {m.y}</p>
+<p>(x, y) = ({date}, {point.Close})</p>
 <h2>Chart</h2>
 <div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
   <!-- <div class="chart"> -->
   <svg on:mousemove={handleMousemove}>
+    <!-- tooltip -->
+    <g class="tooltip" transform="translate(0, 0)">
+      <line
+        y1={yScale(point.Close)}
+        y2={yScale(point.Close)}
+        x1={padding.left}
+        x2={width - padding.right}
+      />
+      <line
+        y2={height - padding.bottom}
+        x1={xScale(point.Date)}
+        x2={xScale(point.Date)}
+      />
+    </g>
     <!-- y axis -->
     <g class="axis y-axis">
       {#each yTicks as tick}
@@ -98,6 +122,10 @@
   .tick {
     font-size: 0.725em;
     font-weight: 200;
+  }
+
+  .tooltip line {
+    stroke: #777;
   }
 
   .tick line {
