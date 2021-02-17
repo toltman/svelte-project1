@@ -1,16 +1,24 @@
 <script>
   export let yValue = "$100";
-  export let top;
+  export let top = 0;
+  export let type = "initial";
 
   let width = 50;
   let height = 15;
+
+  let backgroundColor = "#aaa";
+  if (type == "y") {
+    backgroundColor = "#000";
+  } else if (type == "last") {
+    backgroundColor = "rgb(0, 100, 100)";
+  }
 </script>
 
 <div
   class="arrowBox"
   style="--before-border: {height / 2}px; --before-margin-top: {-height /
     2}px; width: {width}px; height: {height}px; line-height: {height}px; top: {top -
-    height / 2}px"
+    height / 2}px; --bg-color: {backgroundColor}"
 >
   {yValue}
 </div>
@@ -18,7 +26,7 @@
 <style>
   .arrowBox {
     z-index: 10;
-    background-color: rgb(0, 100, 100);
+    background-color: var(--bg-color);
     border-radius: 2px;
     position: absolute;
     font-size: 0.725em;
@@ -36,7 +44,7 @@
     border-top: var(--before-border) solid transparent;
     border-left: var(--before-border) solid transparent;
     border-bottom: var(--before-border) solid transparent;
-    border-right: var(--before-border) solid rgb(0, 100, 100);
+    border-right: var(--before-border) solid var(--bg-color);
     border-radius: 2px;
     position: absolute;
     right: 100%;

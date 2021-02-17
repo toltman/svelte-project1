@@ -51,14 +51,28 @@
     .y1((d) => yScale(d.Close))
     .y0(yScale(0))(data);
   $: point = data[0];
+  $: last = data[data.length - 1];
+  $: first = data[0];
 </script>
 
-<p>The mouse position is {m.x}, {m.y}</p>
-<p>(x, y) = ({formatTime(point.Date)}, {formatDollars(point.Close)})</p>
-<h2>Chart</h2>
+<h2>AAPL</h2>
 <div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
   <XTooltip xValue={formatTime(point.Date)} left={xScale(point.Date)} />
-  <YTooltip yValue={formatDollars(point.Close)} top={yScale(point.Close)} />
+  <YTooltip
+    yValue={formatDollars(first.Close)}
+    top={yScale(first.Close)}
+    type="initial"
+  />
+  <YTooltip
+    yValue={formatDollars(last.Close)}
+    top={yScale(last.Close)}
+    type="last"
+  />
+  <YTooltip
+    yValue={formatDollars(point.Close)}
+    top={yScale(point.Close)}
+    type="y"
+  />
   <svg on:mousemove={handleMousemove}>
     <!-- tooltip -->
     <g class="tooltip" transform="translate(0, 0)">
@@ -105,7 +119,6 @@
     <TooltipPoint x={xScale(point.Date)} y={yScale(point.Close)} />
   </svg>
 </div>
-<p>Something that goes after the chart.</p>
 
 <style>
   .chart,
@@ -120,7 +133,7 @@
   svg {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 300px;
     overflow: visible;
   }
 
