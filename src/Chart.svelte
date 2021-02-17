@@ -4,10 +4,11 @@
   import { line as d3line, area as d3area } from "d3-shape";
   import { format as d3format } from "d3-format";
   import { timeFormat as d3timeFormat } from "d3-time-format";
+  import XTooltip from "./XTooltip.svelte";
   import YTooltip from "./YTooltip.svelte";
   export let data;
 
-  const padding = { top: 10, right: 10, bottom: 20, left: 10 };
+  const padding = { top: 30, right: 10, bottom: 20, left: 20 };
 
   let width = 500;
   let height = 200;
@@ -55,7 +56,8 @@
 <p>(x, y) = ({formatTime(point.Date)}, {formatDollars(point.Close)})</p>
 <h2>Chart</h2>
 <div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
-  <YTooltip yValue={formatDollars(point.Close)} />
+  <XTooltip xValue={formatTime(point.Date)} left={xScale(point.Date)} />
+  <YTooltip yValue={formatDollars(point.Close)} top={yScale(point.Close)} />
   <svg on:mousemove={handleMousemove}>
     <!-- tooltip -->
     <g class="tooltip" transform="translate(0, 0)">
