@@ -6,6 +6,7 @@
   import { timeFormat as d3timeFormat } from "d3-time-format";
   import XTooltip from "./XTooltip.svelte";
   import YTooltip from "./YTooltip.svelte";
+  import TooltipPoint from "./TooltipPoint.svelte";
   export let data;
 
   const padding = { top: 30, right: 10, bottom: 20, left: 20 };
@@ -101,6 +102,7 @@
     <!-- data -->
     <path class="path-line" d={pathLine} />
     <path class="path-area" d={pathArea} />
+    <TooltipPoint x={xScale(point.Date)} y={yScale(point.Close)} />
   </svg>
 </div>
 <p>Something that goes after the chart.</p>
@@ -123,12 +125,12 @@
   }
 
   .tick {
-    font-size: 0.725em;
     font-weight: 200;
+    font-size: 0.725em;
   }
 
   .tooltip line {
-    stroke: #777;
+    stroke: #aaa;
   }
 
   .tick line {

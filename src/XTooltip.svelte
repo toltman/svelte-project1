@@ -17,6 +17,7 @@
 
 <style>
   .arrowBox {
+    z-index: 10;
     background-color: rgb(0, 100, 100);
     border-radius: 2px;
     position: absolute;
@@ -29,6 +30,7 @@
 
   .arrowBox:after {
     content: " ";
+    z-index: 10;
     width: 0px;
     height: 0px;
     border-top: var(--after-border) solid rgb(0, 100, 100);
