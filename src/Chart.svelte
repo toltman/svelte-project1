@@ -2,25 +2,26 @@
   import { scaleLinear as d3scaleLinear } from "d3-scale";
   import { extent as d3extent, bisector as d3bisector } from "d3-array";
   import { line as d3line, area as d3area } from "d3-shape";
+  import { format as d3format } from "d3-format";
   import { timeFormat as d3timeFormat } from "d3-time-format";
+  import YTooltip from "./YTooltip.svelte";
   export let data;
 
-  const padding = { top: 20, right: 15, bottom: 20, left: 25 };
+  const padding = { top: 10, right: 10, bottom: 20, left: 10 };
 
   let width = 500;
   let height = 200;
 
   var formatTime = d3timeFormat("%b %d");
+  var formatDollars = d3format("$.2f");
 
   let m = { x: 0, y: 0 };
-  let date;
 
   var bisect = d3bisector((d) => d.Date).right;
 
   function handleMousemove(event) {
     m.x = event.offsetX;
     m.y = event.offsetY;
-    date = formatTime(new Date(xScale.invert(m.x)));
     let i = bisect(data, xScale.invert(m.x));
     if (i < data.length) {
       point = data[i];
@@ -51,10 +52,10 @@
 </script>
 
 <p>The mouse position is {m.x}, {m.y}</p>
-<p>(x, y) = ({date}, {point.Close})</p>
+<p>(x, y) = ({formatTime(point.Date)}, {formatDollars(point.Close)})</p>
 <h2>Chart</h2>
 <div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
-  <!-- <div class="chart"> -->
+  <YTooltip yValue={formatDollars(point.Close)} />
   <svg on:mousemove={handleMousemove}>
     <!-- tooltip -->
     <g class="tooltip" transform="translate(0, 0)">
