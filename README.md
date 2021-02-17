@@ -1,12 +1,8 @@
 # Stock Chart
 
----
-
 This project is a stock chart price visualization. Currently, it displays data on the daily closing price of Apple (AAPL) stock from February 10th, 2020 to February 8th 2021.
 
 ## Svelte app
-
----
 
 This is my first project using svelte as a javascript framework for data visualization.
 
@@ -21,6 +17,8 @@ This is my first project using svelte as a javascript framework for data visuali
   - Price (y) displayed on right side
   - initial price displayed on right side
   - last price displayed on right side
+
+---
 
 ### Planned Features
 
