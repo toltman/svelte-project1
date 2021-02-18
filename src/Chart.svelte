@@ -1,9 +1,9 @@
 <script>
-  import { scaleLinear as d3scaleLinear } from "d3-scale";
-  import { extent as d3extent, bisector as d3bisector } from "d3-array";
-  import { line as d3line, area as d3area } from "d3-shape";
-  import { format as d3format } from "d3-format";
-  import { timeFormat as d3timeFormat } from "d3-time-format";
+  import { scaleLinear } from "d3-scale";
+  import { extent, bisector } from "d3-array";
+  import { line, area } from "d3-shape";
+  import { format } from "d3-format";
+  import { timeFormat } from "d3-time-format";
   import TooltipTop from "./TooltipTop.svelte";
   import TooltipRight from "./TooltipRight.svelte";
   import TooltipPoint from "./TooltipPoint.svelte";
@@ -18,12 +18,12 @@
   let width = 500;
   let height = 250;
 
-  var formatTime = d3timeFormat("%b %d");
-  var formatDollars = d3format("$.2f");
+  var formatTime = timeFormat("%b %d");
+  var formatDollars = format("$.2f");
 
   let m = { x: 0, y: 0 };
 
-  var bisect = d3bisector((d) => d.Date).right;
+  var bisect = bisector((d) => d.Date).right;
 
   function handleMousemove(event) {
     m.x = event.offsetX;
@@ -36,21 +36,21 @@
 
   $: minX = data[0].Date;
   $: maxX = data[data.length - 1].Date;
-  $: extentY = d3extent(data, (d) => d.Close);
+  $: extentY = extent(data, (d) => d.Close);
 
-  $: xScale = d3scaleLinear()
+  $: xScale = scaleLinear()
     .domain([minX, maxX])
     .range([padding.left, width - padding.right]);
-  $: yScale = d3scaleLinear()
+  $: yScale = scaleLinear()
     .domain([0, extentY[1]])
     .range([height - padding.bottom, padding.top]);
 
   $: xTicks = xScale.ticks(5);
   $: yTicks = yScale.ticks(4);
-  $: pathLine = d3line()
+  $: pathLine = line()
     .x((d) => xScale(d.Date))
     .y((d) => yScale(d.Close))(data);
-  $: pathArea = d3area()
+  $: pathArea = area()
     .x((d) => xScale(d.Date))
     .y1((d) => yScale(d.Close))
     .y0(yScale(0))(data);
