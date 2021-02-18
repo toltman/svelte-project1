@@ -56,7 +56,7 @@
 </script>
 
 <h2>AAPL</h2>
-<div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
+<div class="chart" bind:clientHeight="{height}" bind:clientWidth="{width}">
   <XTooltip xValue={formatTime(point.Date)} left={xScale(point.Date)} />
   <YTooltip
     yValue={formatDollars(first.Close)}
@@ -122,18 +122,17 @@
 
 <style>
   .chart,
-  h2,
-  /* p {
+  h2 {
     width: 100%;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
-  } */
+  }
 
   svg {
     position: relative;
     width: 100%;
-    height: 300px;
+    height: 200px;
     overflow: visible;
   }
 
