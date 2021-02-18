@@ -12,7 +12,7 @@
   const padding = { top: 30, right: 10, bottom: 20, left: 20 };
 
   let width = 500;
-  let height = 200;
+  let height = 250;
 
   var formatTime = d3timeFormat("%b %d");
   var formatDollars = d3format("$.2f");
@@ -121,18 +121,24 @@
 </div>
 
 <style>
-  .chart,
-  h2 {
+  .chart {
     width: 100%;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
   }
 
+  	h2 {
+		color: #ff3e00;
+		text-transform: uppercase;
+		font-size: 3em;
+		font-weight: 100;
+	}
+
   svg {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 250px;
     overflow: visible;
   }
 
