@@ -1,5 +1,5 @@
 <script>
-  export let xValue = "Aug 01";
+  export let value = "Aug 01";
   export let left = 200;
 
   let width = 50;
@@ -12,7 +12,7 @@
     2}px; width: {width}px; height: {height}px; line-height: {height}px; left: {left -
     width / 2}px"
 >
-  {xValue}
+  {value}
 </div>
 
 <style>

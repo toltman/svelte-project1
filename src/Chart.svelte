@@ -4,9 +4,10 @@
   import { line as d3line, area as d3area } from "d3-shape";
   import { format as d3format } from "d3-format";
   import { timeFormat as d3timeFormat } from "d3-time-format";
-  import XTooltip from "./XTooltip.svelte";
-  import YTooltip from "./YTooltip.svelte";
+  import TooltipTop from "./TooltipTop.svelte";
+  import TooltipRight from "./TooltipRight.svelte";
   import TooltipPoint from "./TooltipPoint.svelte";
+  import TooltipLines from "./TooltipLines.svelte"
   export let data;
 
   const padding = { top: 30, right: 10, bottom: 20, left: 20 };
@@ -53,41 +54,42 @@
   $: point = data[0];
   $: last = data[data.length - 1];
   $: first = data[0];
+
+  // coords for horizontal tooltip line
+  let hline = {}
+  $: hline.y1 = yScale(point.Close)
+  $: hline.y2 = yScale(point.Close)
+  $: hline.x1 = padding.left
+  $: hline.x2 = width - padding.right
+
+  // coords for vertical tooltip line
+  let vline = {}
+  $: vline.y1 = 0
+  $: vline.y2 = height - padding.bottom
+  $: vline.x1 = xScale(point.Date)
+  $: vline.x2 = xScale(point.Date)
 </script>
 
 <h2>AAPL</h2>
 <div class="chart" bind:clientHeight="{height}" bind:clientWidth="{width}">
-  <XTooltip xValue={formatTime(point.Date)} left={xScale(point.Date)} />
-  <YTooltip
-    yValue={formatDollars(first.Close)}
+  <TooltipTop value={formatTime(point.Date)} left={xScale(point.Date)} />
+  <TooltipRight
+    value={formatDollars(first.Close)}
     top={yScale(first.Close)}
     type="initial"
   />
-  <YTooltip
-    yValue={formatDollars(last.Close)}
+  <TooltipRight
+    value={formatDollars(last.Close)}
     top={yScale(last.Close)}
     type="last"
   />
-  <YTooltip
-    yValue={formatDollars(point.Close)}
+  <TooltipRight
+    value={formatDollars(point.Close)}
     top={yScale(point.Close)}
-    type="y"
+    type="point"
   />
   <svg on:mousemove={handleMousemove}>
-    <!-- tooltip -->
-    <g class="tooltip" transform="translate(0, 0)">
-      <line
-        y1={yScale(point.Close)}
-        y2={yScale(point.Close)}
-        x1={padding.left}
-        x2={width - padding.right}
-      />
-      <line
-        y2={height - padding.bottom}
-        x1={xScale(point.Date)}
-        x2={xScale(point.Date)}
-      />
-    </g>
+    <TooltipLines hline={hline} vline={vline}/>
     <!-- y axis -->
     <g class="axis y-axis">
       {#each yTicks as tick}

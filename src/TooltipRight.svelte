@@ -1,5 +1,5 @@
 <script>
-  export let yValue = "$100";
+  export let value = "$100";
   export let top = 0;
   export let type = "initial";
 
@@ -7,7 +7,7 @@
   let height = 15;
 
   let backgroundColor = "#aaa";
-  if (type == "y") {
+  if (type == "point") {
     backgroundColor = "#000";
   } else if (type == "last") {
     backgroundColor = "rgb(0, 100, 100)";
@@ -20,7 +20,7 @@
     2}px; width: {width}px; height: {height}px; line-height: {height}px; top: {top -
     height / 2}px; --bg-color: {backgroundColor}"
 >
-  {yValue}
+  {value}
 </div>
 
 <style>
