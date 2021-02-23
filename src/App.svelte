@@ -1,7 +1,6 @@
 <script>
   import data from "./data.js";
   import { timeParse } from "d3-time-format";
-  import { extent } from "d3-array";
   import Chart from "./Chart.svelte";
 
   data.forEach((d) => {
@@ -9,27 +8,6 @@
     d.Date = new Date(d.Date);
     d.Close = +d.Close;
   });
-
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  $: minX = data[0].Date;
-  $: maxX = data[data.length - 1].Date;
-
-  $: extentY = extent(data, (d) => d.Close);
-  $: minY = extentY[0];
-  $: maxY = extentY[1];
 </script>
 
 <main>
