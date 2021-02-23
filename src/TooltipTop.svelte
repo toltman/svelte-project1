@@ -18,7 +18,7 @@
 <style>
   .arrowBox {
     z-index: 10;
-    background-color: rgb(0, 100, 100);
+    background-color: #000;
     border-radius: 2px;
     position: absolute;
     font-size: 0.725em;
@@ -33,7 +33,7 @@
     z-index: 10;
     width: 0px;
     height: 0px;
-    border-top: var(--after-border) solid rgb(0, 100, 100);
+    border-top: var(--after-border) solid #000;
     border-left: var(--after-border) solid transparent;
     border-bottom: var(--after-border) solid transparent;
     border-right: var(--after-border) solid transparent;
