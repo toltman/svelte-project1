@@ -1,3 +1,5 @@
+import { timeParse } from "d3-time-format";
+
 const csv = `Date,Open,High,Low,Close,Adj_Close,Volume
 2020-02-10,78.544998,80.387497,78.462502,80.387497,79.769165,109348800
 2020-02-11,80.900002,80.974998,79.677498,79.902496,79.287888,94323200
@@ -260,6 +262,12 @@ const data = csv
       .trim()
       .split(`,`);
     return { Date, Open, High, Low, Close, Adj_Close, Volume };
+  });
+
+  data.forEach((d) => {
+    d.Date = timeParse("%Y-%m-%d")(d.Date);
+    d.Date = new Date(d.Date);
+    d.Close = +d.Close;
   });
 
 export default data;

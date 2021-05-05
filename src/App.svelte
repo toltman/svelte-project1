@@ -1,13 +1,6 @@
 <script>
   import data from "./data.js";
-  import { timeParse } from "d3-time-format";
   import Chart from "./Chart.svelte";
-
-  data.forEach((d) => {
-    d.Date = timeParse("%Y-%m-%d")(d.Date);
-    d.Date = new Date(d.Date);
-    d.Close = +d.Close;
-  });
 </script>
 
 <main>
